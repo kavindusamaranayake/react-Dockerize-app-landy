@@ -95,7 +95,26 @@ jobs:
           push: true
           tags: kavindusamaranayake/github-action-app:latest
           file: ./Dockerfile
+
+  Trivy_Image_Scan:
+    name: Build
+    runs-on: ubuntu-24.04
+    needs: docker_Build_Push
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
         
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          scan-type: image
+          image-ref: kavindusamaranayake/github-action-app:latest
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
 
 
    
