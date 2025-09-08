@@ -28,8 +28,11 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         
-    - name: Run Frontend application
-      run: | 
-       find . -name "*.js" -exec node --check {} +
+    - name: Check JS syntax
+      run: |
+        find . -name "*.js" -print0 | xargs -0 node --check
+      shell: bash
+
+      
 
    
