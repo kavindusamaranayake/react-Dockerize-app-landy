@@ -68,7 +68,7 @@ jobs:
         vuln-type: 'os,library'
         severity: 'CRITICAL,HIGH'
 
-  docker:
+  docker_Build_Push:
     runs-on: ubuntu-latest
     needs: Trivy_file_scan
     
@@ -90,7 +90,7 @@ jobs:
           context: .
           push: true
           tags: kavindusamaranayake/github-action-app:latest
-          file: Dockerfile
+          file: ./Dockerfile
         
 
 
