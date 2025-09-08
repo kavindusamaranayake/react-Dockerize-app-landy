@@ -17,7 +17,6 @@ jobs:
       matrix:
         node-version: [23]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -33,6 +32,22 @@ jobs:
         find . -name "*.js" -print0 | xargs -0 node --check
       shell: bash
 
-      
+
+  GitleaksScan:
+    name: gitleaks
+    runs-on: ubuntu-latest
+    needs: Compile
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Gitleaks Scan
+        uses: gitleaks/gitleaks-action@v2
+
+      - name: Run Gitleaks
+        run: gitleaks detect --source . --exit-code 1
+
 
    
