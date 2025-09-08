@@ -49,5 +49,25 @@ jobs:
       - name: Run Gitleaks
         run: gitleaks detect --source . --exit-code 1
 
+  Trivy_file_scan:
+    name: filescan
+    runs-on: ubuntu-24.04
+    needs: GitleaksScan
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Run Trivy vulnerability scanner in fs mode
+      uses: aquasecurity/trivy-action@0.28.0
+      with:
+        scan-type: 'fs'
+        scan-ref: '.'
+        format: 'table'
+        ignore-unfixed: true
+        vuln-type: 'os,library'
+        severity: 'CRITICAL,HIGH'
+        
+
 
    
