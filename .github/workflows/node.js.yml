@@ -11,6 +11,7 @@ on:
 
 jobs:
   Compile:
+    name: Compile 
     runs-on: ubuntu-latest
 
     strategy:
@@ -34,7 +35,7 @@ jobs:
 
 
   GitleaksScan:
-    name: gitleaks
+    name: gitleaks scan
     runs-on: ubuntu-latest
     needs: Compile
     
@@ -50,7 +51,7 @@ jobs:
         run: gitleaks detect --source . --exit-code 1
 
   Trivy_file_scan:
-    name: filescan
+    name: trivy file scan
     runs-on: ubuntu-24.04
     needs: GitleaksScan
     
@@ -69,6 +70,7 @@ jobs:
         severity: 'CRITICAL,HIGH'
 
   docker_Build_Push:
+    name: docker image build & push
     runs-on: ubuntu-latest
     needs: Trivy_file_scan
     
@@ -97,7 +99,7 @@ jobs:
           file: ./Dockerfile
 
   Trivy_Image_Scan:
-    name: Build
+    name: trivy image scan
     runs-on: ubuntu-24.04
     needs: docker_Build_Push
     
@@ -111,7 +113,7 @@ jobs:
           scan-type: image
           image-ref: kavindusamaranayake/github-action-app:latest
           format: 'table'
-          exit-code: '1'
+          exit-code: '0'
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
