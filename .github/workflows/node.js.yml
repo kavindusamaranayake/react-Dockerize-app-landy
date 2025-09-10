@@ -84,7 +84,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: SonarQube Scan
-      uses: SonarSource/sonarqube-scan-action@v5.3.1 # Ex: v4.1.0, See the latest version at https://github.com/marketplace/actions/official-sonarqube-scan
+      uses: SonarSource/sonarqube-scan-action@v5.3.1 #latest version at https://github.com/marketplace/actions/official-sonarqube-scan
       with:
         projectBaseDir: .
         args: >
