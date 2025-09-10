@@ -35,7 +35,7 @@ jobs:
 
 
   GitleaksScan:
-    name: Agent-1
+    name: Gitleaks Scan
     runs-on: Agent-1
     needs: Compile
     
