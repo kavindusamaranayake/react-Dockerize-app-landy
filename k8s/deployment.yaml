@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: landy-reat-app
+  labels:
+    app: landy-reat-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: landy-reat-app
+  template:
+    metadata:
+      labels:
+        app: landy-reat-app
+    spec:
+      containers:
+        - name: landy-reat-app
+          image: kavindusamaranayake/github-action-app:latest
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+          env:
+            - name: NODE_ENV
+              value: "production"
